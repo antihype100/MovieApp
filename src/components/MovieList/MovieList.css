@@ -1,0 +1,7 @@
+.movieList {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
