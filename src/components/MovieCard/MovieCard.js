@@ -5,33 +5,27 @@ import './MovieCard.css';
 
 class MovieCard extends Component {
 
+    state = {
+        visible: false
+    };
 
-    constructor(props) {
-        super(props);
-        this.toggleVisible = this.toggleVisible.bind(this);
-        this.state = {
-            visible: false
-        };
-    }
-
-    genresElement = this.props.genres.map(genreItem => {
-        return (
-            <li key={genreItem.id} className="genresList__item">{genreItem.name}</li>
-        );
-    });
+    // genresElement = this.props.genres.map(genreItem => {
+    //     return (
+    //         <li key={genreItem.id} className="genresList__item">{genreItem.name}</li>
+    //     );
+    // });
     imgSrc = `http://image.tmdb.org/t/p/w500${this.props.imgPath}`;
 
 
-    toggleVisible() {
+    toggleVisible = () => {
         this.setState( { visible: !this.state.visible } )
-        console.log('I was clicked');
     }
 
     render() {
         const visible = this.state.visible
-        if (this.genresElement.length > 3) {
-            this.genresElement = this.genresElement.slice(0, 3)
-        }
+        // if (this.genresElement.length > 3) {
+        //     this.genresElement = this.genresElement.slice(0, 3)
+        // }
         return (
 
             <li className="movieCard">

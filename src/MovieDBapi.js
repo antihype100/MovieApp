@@ -15,8 +15,8 @@ export default class MovieDBapi {
         return this.getResource(`/3/movie/${id}?api_key=${this._token}`)
     }
 
-    getImgForMovie(id) {
-        return this.getResource(`/3/movie/${id}/images?api_key=${this._token}`)
+    getMovieOnRequest(text) {
+        return this.getResource(`/3/search/movie/?api_key=${this._token}&query=${text}`)
     }
-}
 
+}

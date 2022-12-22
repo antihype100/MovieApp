@@ -12,6 +12,9 @@
     box-shadow: 12px 5px 33px -5px rgba(34, 60, 80, 0.42);
 
 }
+.movieCard:nth-child(2n + 1) {
+    margin-left: 0;
+}
 .movieImg {
     width: 183px;
     margin-right: 20px;

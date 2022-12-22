@@ -10,7 +10,7 @@ const MovieList = ({movieList, page}) => {
             <MovieCard key={movieItem.id}
                        movieTitle={movieItem.original_title}
                        date={movieItem.release_date}
-                       genres={movieItem.genres}
+                       genres={movieItem.genres_ids}
                        description={movieItem.overview}
                        imgPath={movieItem.poster_path}
             />

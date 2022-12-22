@@ -5,25 +5,38 @@ import MovieDBapi from '../../MovieDBapi';
 import FilmList from '../MovieList/MovieList';
 import './App.css';
 import './Spin.css';
+import SearchPanel from '../SearchPanel/SearchPanel';
 
 
 class App extends Component {
 
     movieDBApi = new MovieDBapi();
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            loading: false,
-            movieList: [],
-            page: 1
-        };
-    }
+    state = {
+        loading: false,
+        movieList: [],
+        page: 1
+    };
 
     componentDidMount() {
         for (let i = 1; i < 30; i++) {
             this.getMovie(i);
         }
+    }
+
+    getMovieOnRequest = (text) => {
+        this.movieDBApi.getMovieOnRequest(text)
+            .then(data => {
+
+                this.setState(({movieList}) => {
+                    const newArr =  data.results;
+                    return {
+                        movieList: newArr,
+                        loading: true
+                    };
+                });
+            })
+            .catch(e => {})
     }
 
     getMovie(id) {
@@ -40,11 +53,14 @@ class App extends Component {
                 }
 
 
-            });
+            })
+            .catch(e => {})
 
     }
 
-    spin = <div className="loadingio-spinner-double-ring-vlg9m4zserh">
+
+    render() {
+        let spin = <div className="loadingio-spinner-double-ring-vlg9m4zserh">
         <div className="ldio-k7bsy3l22yh">
             <div></div>
             <div></div>
@@ -56,31 +72,25 @@ class App extends Component {
             </div>
         </div>
     </div>;
-
-    render() {
         const loading = this.state.loading;
         let content = <>
             <FilmList movieList={this.state.movieList}
                       page={this.state.page}
             />
         </>;
-        let spin = this.spin;
         content = loading ? content : null;
         spin = !loading ? spin : null;
 
 
         return (
-            <div>
-                <Online>
-                    <>
+            <>
+
+                        <SearchPanel getMovies={this.getMovieOnRequest}/>
                         {content}
                         {spin}
-                    </>
-                </Online>
-                <Offline >
-                    Нет интернета
-                </Offline>
-            </div>
+
+
+             </>
         );
 
     }
