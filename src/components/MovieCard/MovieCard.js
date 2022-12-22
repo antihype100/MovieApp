@@ -1,30 +1,55 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDom from 'react-dom';
-import './MovieCard.css'
+import './MovieCard.css';
 
 
-const MovieCard = ({movieTitle, genres, description, date, imgPath}) => {
+class MovieCard extends Component {
 
-    const genresElement = genres.map(genreItem => {
+
+    constructor(props) {
+        super(props);
+        this.toggleVisible = this.toggleVisible.bind(this);
+        this.state = {
+            visible: false
+        };
+    }
+
+    genresElement = this.props.genres.map(genreItem => {
         return (
-            <li key={genreItem.id} className='genresList__item'>{genreItem.name}</li>
-        )
-    })
-    const imgSrc = `http://image.tmdb.org/t/p/w500${imgPath}`
-    return (
+            <li key={genreItem.id} className="genresList__item">{genreItem.name}</li>
+        );
+    });
+    imgSrc = `http://image.tmdb.org/t/p/w500${this.props.imgPath}`;
 
-        <li className='movieCard'>
-            <img className="movieImg" src={imgSrc} alt={movieTitle}/>
-            <div>
-                <h2 className='movieTitle'>{ movieTitle }</h2>
-                <span className='releaseDate'>{ date }</span>
-                <ul className='genresList'>
-                    { genresElement }
-                </ul>
-                <p className='description'>{ description }</p>
-            </div>
-        </li>
-    )
+
+    toggleVisible() {
+        this.setState( { visible: !this.state.visible } )
+        console.log('I was clicked');
+    }
+
+    render() {
+        const visible = this.state.visible
+        if (this.genresElement.length > 3) {
+            this.genresElement = this.genresElement.slice(0, 3)
+        }
+        return (
+
+            <li className="movieCard">
+                <img className="movieImg" src={this.imgSrc} alt={this.movieTitle}/>
+                <div>
+                    <h2 className="movieTitle">{this.props.movieTitle}</h2>
+                    <span className="releaseDate">{this.props.date}</span>
+                    <ul className="genresList">
+                        {this.genresElement}
+                    </ul>
+                    <p className={visible ? 'description show' : 'description hidden'} onClick={this.toggleStatus}>
+                        {this.props.description}
+                    </p>
+                    <button onClick={this.toggleVisible}>{visible ? 'Скрыть' : 'Показать'} весь текст</button>
+                </div>
+            </li>
+        );
+    }
 }
 
-export default MovieCard
+export default MovieCard;

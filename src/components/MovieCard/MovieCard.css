@@ -6,6 +6,11 @@
     margin-bottom: 35px;
     flex-basis: 50%;
     margin-left: 32px;
+    filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
+    -webkit-box-shadow: 12px 5px 33px -5px rgba(34, 60, 80, 0.42);
+    -moz-box-shadow: 12px 5px 33px -5px rgba(34, 60, 80, 0.42);
+    box-shadow: 12px 5px 33px -5px rgba(34, 60, 80, 0.42);
+
 }
 .movieImg {
     width: 183px;
@@ -16,6 +21,7 @@
     font-size: 20px;
     color: #000000;
     font-weight: 400;
+    margin-top: 12px;
 }
 
 .releaseDate {
@@ -39,10 +45,23 @@
     border: 1px solid #D9D9D9;
     border-radius: 2px;
     padding: 2px 4px;
-    font-size: 12px;font-weight: 400;
+    font-size: 12px;
+    font-weight: 400;
 
 }
 
-.description {
+.description  {
+    margin-bottom: 10px;
+    width: 228px;
     line-height: 22px;
+    overflow: hidden;
+    font-size: 12px;
+    white-space: break-spaces;
+    text-overflow: ellipsis;
+}
+.hidden {
+    height: 87px;
+}
+.show {
+    max-height: 148px;
 }

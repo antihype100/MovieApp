@@ -14,7 +14,7 @@ class App extends Component {
         super(props);
         this.state = {
             movieList: [],
-            page: 0
+            page: 1
         }
     }
 
@@ -47,8 +47,9 @@ class App extends Component {
 
        return (
            <>
-               <button>Click</button>
-               <FilmList movieList={this.state.movieList}/>
+               <FilmList movieList={this.state.movieList}
+                         page={this.state.page}
+               />
            </>
 
        )

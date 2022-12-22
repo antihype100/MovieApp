@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 import MovieCard from '../MovieCard/MovieCard';
 import './MovieList.css'
 
-const MovieList = ({movieList}) => {
+const MovieList = ({movieList, page}) => {
 
     const leftMovieList = movieList.map((movieItem, index) => {
         return (
@@ -20,7 +20,7 @@ const MovieList = ({movieList}) => {
     return (
 
         <ul className='movieList'>
-            {leftMovieList}
+            {leftMovieList.slice(0 + page * 6, 6 + page * 6)}
         </ul>
 
 
