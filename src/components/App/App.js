@@ -1,26 +1,28 @@
 import React, {Component} from 'react';
 import ReactDom from 'react-dom';
+import {Offline, Online} from 'react-detect-offline';
 import MovieDBapi from '../../MovieDBapi';
 import FilmList from '../MovieList/MovieList';
-import './App.css'
-
+import './App.css';
+import './Spin.css';
 
 
 class App extends Component {
 
-    movieDBApi = new MovieDBapi()
+    movieDBApi = new MovieDBapi();
 
     constructor(props) {
         super(props);
         this.state = {
+            loading: false,
             movieList: [],
             page: 1
-        }
+        };
     }
 
     componentDidMount() {
         for (let i = 1; i < 30; i++) {
-            this.getMovie(i)
+            this.getMovie(i);
         }
     }
 
@@ -29,31 +31,59 @@ class App extends Component {
             .then(data => {
                 if (data.backdrop_path != null) {
                     this.setState(({movieList}) => {
-                        const newArr = [...movieList, data]
+                        const newArr = [...movieList, data];
                         return {
-                            movieList: newArr
-                        }
-                    })
+                            movieList: newArr,
+                            loading: true
+                        };
+                    });
                 }
 
 
-            })
+            });
 
     }
 
+    spin = <div className="loadingio-spinner-double-ring-vlg9m4zserh">
+        <div className="ldio-k7bsy3l22yh">
+            <div></div>
+            <div></div>
+            <div>
+                <div></div>
+            </div>
+            <div>
+                <div></div>
+            </div>
+        </div>
+    </div>;
+
+    render() {
+        const loading = this.state.loading;
+        let content = <>
+            <FilmList movieList={this.state.movieList}
+                      page={this.state.page}
+            />
+        </>;
+        let spin = this.spin;
+        content = loading ? content : null;
+        spin = !loading ? spin : null;
 
 
-   render() {
+        return (
+            <div>
+                <Online>
+                    <>
+                        {content}
+                        {spin}
+                    </>
+                </Online>
+                <Offline >
+                    Нет интернета
+                </Offline>
+            </div>
+        );
 
-       return (
-           <>
-               <FilmList movieList={this.state.movieList}
-                         page={this.state.page}
-               />
-           </>
-
-       )
-   }
+    }
 }
 
-export default App
+export default App;
