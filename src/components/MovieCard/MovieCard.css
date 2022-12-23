@@ -11,6 +11,21 @@
     -moz-box-shadow: 12px 5px 33px -5px rgba(34, 60, 80, 0.42);
     box-shadow: 12px 5px 33px -5px rgba(34, 60, 80, 0.42);
 
+
+}
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+}
+.ellipse {
+    position: absolute;
+    right: 10px;
+    top: 14px;
+}
+.rateNum {
+    position: absolute;
+    right: 17px;
+    top: 22px;
 }
 .movieCard:nth-child(2n + 1) {
     margin-left: 0;
@@ -23,8 +38,9 @@
     margin-bottom: 15px;
     font-size: 20px;
     color: #000000;
+    margin-right: 10px;
     font-weight: 400;
-    margin-top: 12px;
+    margin-top: 20px;
 }
 
 .releaseDate {

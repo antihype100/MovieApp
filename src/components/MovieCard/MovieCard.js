@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDom from 'react-dom';
 import './MovieCard.css';
+import Ellipse from './ellipse.svg'
 
 
 class MovieCard extends Component {
@@ -31,7 +32,11 @@ class MovieCard extends Component {
             <li className="movieCard">
                 <img className="movieImg" src={this.imgSrc} alt={this.movieTitle}/>
                 <div>
-                    <h2 className="movieTitle">{this.props.movieTitle}</h2>
+                    <header className='cardHeader'>
+                        <h2 className="movieTitle">{this.props.movieTitle}</h2>
+                        <img className='ellipse' src={Ellipse} alt=""/>
+                        <span className='rateNum'>{10}</span>
+                    </header>
                     <span className="releaseDate">{this.props.date}</span>
                     <ul className="genresList">
                         {this.genresElement}

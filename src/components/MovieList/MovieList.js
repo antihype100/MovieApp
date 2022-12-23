@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import MovieCard from '../MovieCard/MovieCard';
-import './MovieList.css'
+import './MovieList.css';
 
 const MovieList = ({movieList, page}) => {
 
-    const leftMovieList = movieList.map((movieItem, index) => {
+    const leftMovieList = movieList.map((movieItem) => {
         return (
             <MovieCard key={movieItem.id}
                        movieTitle={movieItem.original_title}
@@ -18,12 +18,9 @@ const MovieList = ({movieList, page}) => {
     });
 
     return (
-
-        <ul className='movieList'>
+        <ul className="movieList">
             {leftMovieList.slice(0 + page * 6, 6 + page * 6)}
         </ul>
-
-
     );
 };
 
