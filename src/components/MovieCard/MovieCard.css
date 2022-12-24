@@ -33,6 +33,7 @@
 .movieImg {
     width: 183px;
     margin-right: 20px;
+    color: #1890FF;
 }
 .movieTitle {
     margin-bottom: 15px;
@@ -79,8 +80,9 @@
     text-overflow: ellipsis;
 }
 .hidden {
-    height: 87px;
+    height: 40px;
 }
 .show {
-    max-height: 148px;
+    max-height: 110px;
 }
+

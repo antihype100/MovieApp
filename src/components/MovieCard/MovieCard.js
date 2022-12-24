@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ReactDom from 'react-dom';
 import './MovieCard.css';
 import Ellipse from './ellipse.svg'
+import Rate from '../Rate/Rate';
 
 
 class MovieCard extends Component {
@@ -35,7 +36,7 @@ class MovieCard extends Component {
                     <header className='cardHeader'>
                         <h2 className="movieTitle">{this.props.movieTitle}</h2>
                         <img className='ellipse' src={Ellipse} alt=""/>
-                        <span className='rateNum'>{10}</span>
+                        <span className='rateNum'>{this.props.rate.toFixed(1)}</span>
                     </header>
                     <span className="releaseDate">{this.props.date}</span>
                     <ul className="genresList">
@@ -45,6 +46,7 @@ class MovieCard extends Component {
                         {this.props.description}
                     </p>
                     <button onClick={this.toggleVisible}>{visible ? 'Скрыть' : 'Показать'} весь текст</button>
+                    <Rate title_id={this.props.movieTitle}/>
                 </div>
             </li>
         );

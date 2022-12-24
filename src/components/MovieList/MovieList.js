@@ -13,6 +13,7 @@ const MovieList = ({movieList, page}) => {
                        genres={movieItem.genres_ids}
                        description={movieItem.overview}
                        imgPath={movieItem.poster_path}
+                       rate={movieItem.vote_average}
             />
         );
     });

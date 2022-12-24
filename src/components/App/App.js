@@ -21,10 +21,17 @@ class App extends Component {
         pagesList: [1, 2, 3, 4, 5],
         random: true,
         textRequest: '',
-        pageRequest: 2
+        pageRequest: 2,
+        tab: 'search'
     };
 
     componentDidMount() {
+        if(!localStorage.getItem('guestSessionToken')) {
+            console.log('Create token in local_storage');
+            this.movieDBApi.createNewSession()
+        }
+
+
         for (this.countMovie; this.countMovie < this.limit; this.countMovie++) {
             this.getMovie(this.countMovie);
         }
