@@ -19,12 +19,18 @@
     font-family: 'Inter', sans-serif;
 
 }
-
 .searchPanelButtonWrapper button:hover {
     border-bottom: 1px solid #1890FF;
     color: #1890FF;
-
 }
+.focusSearchPanelButton {
+
+    border-bottom: 1px solid #1890FF;
+    color: #1890FF;
+}
+
+
+
 .searchPanelWrapper input {
     width: 924px;
     padding: 9px 0 9px 12px;

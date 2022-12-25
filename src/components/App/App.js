@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import ReactDom from 'react-dom';
-import {Offline, Online} from 'react-detect-offline';
 import MovieDBapi from '../../MovieDBapi';
 import SearchPanel from '../SearchPanel/SearchPanel';
 import Pagination from '../Pagination/Pagination';
 import MovieList from '../MovieList/MovieList';
 import './App.css';
 import './Spin.css';
+
 
 class App extends Component {
 
@@ -22,23 +22,30 @@ class App extends Component {
         random: true,
         textRequest: '',
         pageRequest: 2,
-        tab: 'search'
+        tab: 'search',
+        ratedMovies: [],
+        genresList: []
     };
 
     componentDidMount() {
-        if(!localStorage.getItem('guestSessionToken')) {
-            console.log('Create token in local_storage');
-            this.movieDBApi.createNewSession()
+        this.movieDBApi.getGenresList()
+            .then(data => this.setState({
+                genresList: data.genres
+            }))
+
+        if (!localStorage.getItem('guestSessionToken')) {
+            this.movieDBApi.createNewSession();
         }
-
-
         for (this.countMovie; this.countMovie < this.limit; this.countMovie++) {
             this.getMovie(this.countMovie);
         }
-
+        this.movieDBApi.getRatedMovies()
+            .then(data => this.setState({
+                ratedMovies: data.results
+            }));
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps, prevState) {
         if (this.state.movieList === prevState.movieList && this.state.random) {
             if (this.state.movieList.length / 6 < this.state.page + 2) {
                 this.limit += 40;
@@ -57,10 +64,8 @@ class App extends Component {
     }
 
     getMovieOnRequest = (text, page) => {
-
         this.movieDBApi.getMovieOnRequest(text, page)
             .then(data => {
-
                 this.setState(({movieList, page, random, pagesList, textRequest, pageRequest}) => {
                     let newArr = [...movieList, ...data.results];
                     if (random) {
@@ -103,12 +108,9 @@ class App extends Component {
                         };
                     });
                 }
-
-
             })
             .catch(e => {
             });
-
     }
 
     getPageNumber = (page) => {
@@ -130,7 +132,6 @@ class App extends Component {
                 return {
                     page: 0, pagesList: [1, 2, 3, 4, 5]
                 };
-
             }
             return {
                 page: page - 1, pagesList: pagesList.map(el => el - 1)
@@ -138,6 +139,25 @@ class App extends Component {
         });
     };
 
+    onClickButton = (e) => {
+        this.setState(({tab}) => {
+            if (e.target.innerText === 'Search') {
+                return {
+                    tab: 'search',
+                    page: 0,
+                    pagesList: [1, 2, 3, 4, 5],
+                };
+            } else {
+                this.movieDBApi.getRatedMovies()
+                    .then(data => this.setState({
+                        ratedMovies: data.results,
+                        tab: 'rated',
+                        page: 0,
+                        pagesList: [1, 2, 3, 4, 5],
+                    }));
+            }
+        });
+    };
 
     render() {
         let spin = <div className="loadingio-spinner-double-ring-vlg9m4zserh">
@@ -154,7 +174,12 @@ class App extends Component {
         </div>;
         const loading = this.state.loading;
         let content = <MovieList movieList={this.state.movieList}
-                       page={this.state.page}/>
+                                 page={this.state.page}
+                                 ratedMovies={this.state.ratedMovies}
+                                 tab={this.state.tab}
+                                 genresList={this.state.genresList}
+                    />;
+
 
         content = loading ? content : null;
         spin = !loading ? spin : null;
@@ -162,7 +187,10 @@ class App extends Component {
         if (this.state.movieList.length === 0) {
             return (
                 <>
-                    <SearchPanel getMovies={this.getMovieOnRequest}/>
+                    <SearchPanel getMovies={this.getMovieOnRequest}
+                                 onClickTabButton={this.onClickButton}
+                                 tab={this.state.tab}
+                    />
                     <h1 style={{marginBottom: '20px'}}>Поиск не дал результатов</h1>
                     <Pagination page={this.state.page}
                                 getPage={this.getPageNumber}
@@ -176,7 +204,10 @@ class App extends Component {
         }
         return (
             <>
-                <SearchPanel getMovies={this.getMovieOnRequest}/>
+                <SearchPanel getMovies={this.getMovieOnRequest}
+                             onClickTabButton={this.onClickButton}
+                             tab={this.state.tab}
+                />
                 {content}
                 <Pagination page={this.state.page}
                             getPage={this.getPageNumber}
@@ -188,7 +219,6 @@ class App extends Component {
                 {spin}
             </>
         );
-
     }
 }
 

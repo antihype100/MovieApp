@@ -24,8 +24,9 @@
 }
 .rateNum {
     position: absolute;
-    right: 17px;
-    top: 22px;
+    font-size: 12px;
+    right: 18px;
+    top: 25px;
 }
 .movieCard:nth-child(2n + 1) {
     margin-left: 0;
@@ -83,6 +84,6 @@
     height: 40px;
 }
 .show {
-    max-height: 110px;
+    max-height: 90px;
 }
 

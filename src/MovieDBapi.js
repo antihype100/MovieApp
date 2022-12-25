@@ -20,16 +20,13 @@ export default class MovieDBapi {
         return await res.json();
     }
 
-
-
-
     createNewSession() {
 
         return this.getResource(`/3/authentication/guest_session/new?api_key=${this._token}`)
             .then(data => {
-                console.log('Session Connect', data.guest_session_id)
-                localStorage.setItem('guestSessionToken', data.guest_session_id)
-            })
+                console.log('Session Connect', data.guest_session_id);
+                localStorage.setItem('guestSessionToken', data.guest_session_id);
+            });
     }
 
     getMovie(id) {
@@ -40,7 +37,25 @@ export default class MovieDBapi {
         return this.getResource(`/3/search/movie/?api_key=${this._token}&query=${text}&page=${page}`);
     }
 
-    setRateMovie(id) {
-        return this.postResource(`3/movie/${id}/rating?api_key=${this._token}&guest_session_id=81c1c8f88244a8946617c49b4d4a873a`)
+    setRateMovie(id, voteRate) {
+        console.log(voteRate);
+        return this.postResource(`/3/movie/${id}/rating?api_key=${this._token}&guest_session_id=${localStorage.getItem('guestSessionToken')}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                },
+                body: JSON.stringify({
+                    'value': voteRate
+                })
+            });
+    }
+
+    getRatedMovies() {
+        return this.getResource(`/3/guest_session/${localStorage.getItem('guestSessionToken')}/rated/movies?api_key=${this._token}&language=en-US&sort_by=created_at.asc`)
+    }
+
+    getGenresList() {
+        return this.getResource(`/3/genre/movie/list?api_key=${this._token}`)
     }
 }
